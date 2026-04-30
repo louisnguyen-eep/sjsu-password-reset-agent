@@ -1,8 +1,7 @@
 """CLI entry point — runs an interactive chat loop and prints an agent trace.
 
-The trace is the thing that sells your demo: graders see which agent is
-firing, which tool it called, and how state evolves. When you move to
-Streamlit, render this same trace in the right pane.
+See which agent is firing, which tool it called, and how state evolves.
+Move to Streamlit, render this same trace in the right pane.
 """
 
 from dotenv import load_dotenv

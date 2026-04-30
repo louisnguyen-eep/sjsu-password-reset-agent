@@ -1,6 +1,6 @@
 """End-to-end tests for the four demo scenarios.
 
-Run before any presentation:
+Run before to test:
     python3.14 -m pytest test_demo.py -v
 
 Each test runs a full LangGraph turn and asserts on the resulting state.
