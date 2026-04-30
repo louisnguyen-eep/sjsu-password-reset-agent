@@ -1,11 +1,10 @@
-# SJSU Password Reset Agent — Demo Script
+# SJSU Password Reset Agent — Architecture
 
-> Total runtime: 7-9 minutes including Q&A buffer.
-> Goal: prove every rubric item with one concrete moment each.
+> Total runtime: 7-9 minutes.
 
 ---
 
-## Pre-demo checklist (run 30 minutes before)
+## Architecture checklist 
 
 Open these tabs in this order so they're left-to-right in your browser:
 
@@ -30,7 +29,7 @@ Test one scenario quickly to confirm everything still works. Then **clear the St
 
 ---
 
-## Opening (45 seconds)
+## Opening
 
 > "Password resets are the #1 ticket type in enterprise IT — typically 20–40% of help desk volume, costing $15–70 each to resolve manually. SJSU's IT help desk is no exception. Our project is a multi-agent AI system that handles SJSUOne password resets end-to-end, with real integrations to Jira and a live RAG knowledge base of SJSU IT documentation."
 
@@ -40,7 +39,7 @@ Test one scenario quickly to confirm everything still works. Then **clear the St
 
 ---
 
-## Scenario 1: Happy path (90 seconds)
+## Scenario 1: Happy path 
 
 **What you're proving:** Multi-agent orchestration. Intake → Workflow with tool-use. The Workflow agent autonomously picks the right tool.
 
@@ -58,7 +57,7 @@ The user message `"I forgot my password, my ID is 012345678"` appears.
 
 ---
 
-## Scenario 2: Cooldown path (75 seconds)
+## Scenario 2: Cooldown path 
 
 **What you're proving:** State-aware tool selection and SJSU-specific business rules.
 
@@ -66,7 +65,7 @@ The user message `"I forgot my password, my ID is 012345678"` appears.
 
 User message: `"I'm locked out, my ID is 123456789"`
 
-**Narrate while it runs:**
+**Reasoning:**
 
 > "Same Intake step, different intent — 'locked_out' instead of 'forgot_password'. Diego's account exists, so identity is verified. Now Workflow gets called again, but watch what tool it picks this time."
 
@@ -76,7 +75,7 @@ User message: `"I'm locked out, my ID is 123456789"`
 
 ---
 
-## Scenario 3: Knowledge / RAG path (60 seconds)
+## Scenario 3: Knowledge / RAG path 
 
 **What you're proving:** RAG with real SJSU documentation, grounding, hallucination prevention.
 
@@ -85,7 +84,7 @@ User message: `"I'm locked out, my ID is 123456789"`
 How do I set up Duo MFA?
 ```
 
-**Narrate:**
+**Explanation:**
 
 > "Now a different intent — Intake classifies this as 'policy_question'. The router skips Workflow entirely and goes straight to Knowledge."
 
@@ -93,7 +92,7 @@ How do I set up Duo MFA?
 
 > "See the answer cites the actual SJSU URL it came from. That's the grounding story — Claude can't hallucinate a procedure because we constrain it to retrieved context. If we ask something not in the corpus, it says 'I don't have that information' instead of making something up."
 
-**Optional second knowledge question if time allows:**
+**Optional second knowledge question:**
 ```
 What are the password requirements at SJSU?
 ```
@@ -108,7 +107,7 @@ What are the password requirements at SJSU?
 
 User message: `"Reset my password, ID 345678901"`
 
-**Narrate while it runs:**
+**Explanation:**
 
 > "Priya's case. The Intake agent looks up her ID and finds the account is inactive — she's an alumni past the 24-month cutoff. Intake classifies this as 'account_not_found'."
 
@@ -137,7 +136,7 @@ List the most recent tickets in the SJSUIT project
 
 ---
 
-## Closing (45 seconds)
+## Closing
 
 > "To summarize what you saw: four LangGraph-orchestrated agents, real Voyage AI embeddings over scraped SJSU documentation, autonomous tool selection by Claude, real Jira ticket creation, and MCP integration in two different clients."
 
@@ -147,7 +146,7 @@ List the most recent tickets in the SJSUIT project
 
 ---
 
-## Q&A — likely grader questions and your answers
+## Q&A 
 
 ### "How do you prevent the agent from resetting the wrong person's password?"
 
@@ -194,16 +193,3 @@ List the most recent tickets in the SJSUIT project
 **Anthropic API rate limit or outage:** Switch to: "While the API recovers, let me walk you through the architecture in more detail." Use the rest of the slides as backup material.
 
 ---
-
-## Time budget breakdown
-
-| Section | Target | Cumulative |
-|---|---|---|
-| Opening + architecture | 0:45 | 0:45 |
-| Scenario 1 (happy path) | 1:30 | 2:15 |
-| Scenario 2 (cooldown) | 1:15 | 3:30 |
-| Scenario 3 (knowledge) | 1:00 | 4:30 |
-| Scenario 4 (escalation + Jira) | 1:30 | 6:00 |
-| Scenario 5 (VS Code MCP) | 1:00 | 7:00 |
-| Closing | 0:45 | 7:45 |
-| Q&A buffer | 1:00+ | 8:45+ |
