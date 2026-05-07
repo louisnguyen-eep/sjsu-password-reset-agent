@@ -5,3 +5,4 @@ __pycache__/
 .DS_Store
 graph.mmd
 graph.png
+demo.log
