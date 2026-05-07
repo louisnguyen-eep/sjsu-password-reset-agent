@@ -129,9 +129,20 @@ def workflow_node(state: AgentState) -> dict:
         action_result = tool_results[0]["result"]
         action_taken = tool_results[0]["tool"]
     else:
-        user_reply = response.content[0].text
-        action_result = None
-        action_taken = None
+        # Extract the text reply from the follow-up. Claude sometimes returns
+        # only tool_use blocks with no text, so we have to look for a text
+        # block explicitly and synthesize one if it's missing.
+        text_blocks = [b for b in followup.content if getattr(b, "type", None) == "text"]
+        if text_blocks:
+            user_reply = text_blocks[0].text
+        else:
+            # No natural-language reply — synthesize one from the tool result.
+            result = tool_results[0]["result"]
+            detail = result.get("detail", "Done.")
+            user_reply = detail if result.get("success") else f"That action couldn't complete: {detail}"
+
+        action_result = tool_results[0]["result"]
+        action_taken = tool_results[0]["tool"]
 
     # Decide status: resolved if the tool succeeded, else escalate
     if action_result and action_result.get("success"):
