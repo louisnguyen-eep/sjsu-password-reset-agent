@@ -2,6 +2,8 @@
 
 A capstone project for BUS-118S that automates SJSUOne password resets end-to-end using a four-agent system built with LangGraph and Anthropic's Claude. The system handles identity verification, retrieves grounded answers from real SJSU IT documentation, executes resets against a mock directory, and escalates unresolvable cases to Jira via MCP.
 
+> See [IMPLEMENTATION.md](./IMPLEMENTATION.md) for a deep technical reference.
+
 > **Group 23 (Baddies)** — Louis Nguyen, Ryann' Clark, Maia Kerr, Christina Tra, Samantha Mier, Kern Dutta
 
 ---
